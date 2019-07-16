@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import ToggleDisplay from "react-toggle-display";
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import moment from "moment";
@@ -16,6 +17,7 @@ export class DefaultPage extends Component {
     super(props)
     this.state = {
        show_category: false,
+       show_categories: true,
     }
   }
   
@@ -24,7 +26,18 @@ export class DefaultPage extends Component {
   }
 
   getCategory = (args) => {
+    this.setState({ 
+      show_category: !this.state.show_category,
+      show_categories: !this.state.show_categories,
+    });
     this.props.actions.category(args);
+  }
+
+  navigateBack = () => {
+    this.setState({ 
+      show_category: !this.state.show_category,
+      show_categories: !this.state.show_categories,
+    });
   }
 
   render() {
@@ -37,7 +50,8 @@ export class DefaultPage extends Component {
     return (
       <div className="home-default-page">
        <div className="container mt-5">
-        <div>
+        
+          <ToggleDisplay show={this.state.show_categories}>
             <ul className="list-group">
               {categories.map((element, index) => (
                   <li
@@ -50,9 +64,9 @@ export class DefaultPage extends Component {
                   </li>
               ))}
             </ul>
-          </div>
+          </ToggleDisplay>
 
-          <div style={this.state.categoryShowedStyle}> 
+          <ToggleDisplay show={this.state.show_category}>
             <div className="card text-secondary mb-3">
               <div className="card-header text-light bg-dark">Welcome to Category</div>
               {Object.entries(category).length > 0 ? 
@@ -76,9 +90,15 @@ export class DefaultPage extends Component {
                   </div>
               }
               </div>
-          </div>
-       </div>
-
+              <button
+                type="button"
+                onClick={this.navigateBack}
+                className="btn btn-sm btn-secondary mt-3"
+              >
+                Back to Categories
+              </button>
+          </ToggleDisplay>
+        </div>
       </div>
     );
   }

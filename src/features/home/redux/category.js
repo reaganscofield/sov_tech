@@ -5,22 +5,19 @@ import {
   HOME_CATEGORY_DISMISS_ERROR,
 } from './constants';
 import axios from 'axios';
+const api_url = "https://api.chucknorris.io/jokes/";
 
-export function category(args = {}) {
+export function category(args) {
   return (dispatch) => { 
     dispatch({
       type: HOME_CATEGORY_BEGIN,
     });
-
-
     const promise = new Promise((resolve, reject) => {
-
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
-      doRequest.then(
+      axios(`${api_url}random?category=${args}`).then(
         (res) => {
           dispatch({
             type: HOME_CATEGORY_SUCCESS,
-            data: res,
+            data: res.data,
           });
           resolve(res);
         },
@@ -61,6 +58,7 @@ export function reducer(state, action) {
         ...state,
         categoryPending: false,
         categoryError: null,
+        categoryData: action.data
       };
 
     case HOME_CATEGORY_FAILURE:

@@ -3,6 +3,8 @@ const initialState = {
   categoriesError: null,
   categoryPending: false,
   categoryError: null,
+  categoriesData: [],
+  categoryData: {},
 };
 
 export default initialState;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.node,
@@ -12,7 +13,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="home-app">
+      <div>
         <div className="page-container">{this.props.children}</div>
       </div>
     );
